@@ -17,4 +17,6 @@ public interface PanelService {
   void register(Panel panel);
   
   Panel findBySerial(String serial);
+  
+  void delete(Panel panel);
 }

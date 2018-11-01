@@ -1,7 +1,10 @@
 package com.crossover.techtrial.service;
 
+import com.crossover.techtrial.dto.DailyElectricity;
 import com.crossover.techtrial.model.HourlyElectricity;
+import com.crossover.techtrial.model.Panel;
 import com.crossover.techtrial.repository.HourlyElectricityRepository;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,18 +17,26 @@ import org.springframework.stereotype.Service;
  * @author Crossover
  *
  */
-
 @Service
 public class HourlyElectricityServiceImpl implements HourlyElectricityService {
-  @Autowired
-  HourlyElectricityRepository hourlyElectricityRepository;
-  
-  public HourlyElectricity save(HourlyElectricity hourlyElectricity) {
-    return hourlyElectricityRepository.save(hourlyElectricity);
-  }
-  
-  public Page<HourlyElectricity> getAllHourlyElectricityByPanelId(Long panelId, Pageable pageable) {
-    return hourlyElectricityRepository.findAllByPanelIdOrderByReadingAtDesc(panelId, pageable);
-  }
-  
+
+    @Autowired
+    HourlyElectricityRepository hourlyElectricityRepository;
+
+    public HourlyElectricity save(HourlyElectricity hourlyElectricity) {
+        return hourlyElectricityRepository.save(hourlyElectricity);
+    }
+
+    public Page<HourlyElectricity> getAllHourlyElectricityByPanelId(Long panelId, Pageable pageable) {
+        return hourlyElectricityRepository.findAllByPanelIdOrderByReadingAtDesc(panelId, pageable);
+    }
+
+    public List<DailyElectricity> retrieveDailyHistorical(Panel panel) {
+        return hourlyElectricityRepository.retrieveDailyHistorical(panel);
+    }
+
+    public void deleteAllHourlyElectricityByPanelId(Long panelId) {
+        hourlyElectricityRepository.deleteAllByPanelId(panelId);
+    }
+
 }
